@@ -8,7 +8,17 @@
             "type": "shell",
             "command": "g++",
             "args": [
-                "-g", "main.cpp", "--std=c++11", "-o", "main.o"
+                "-g", "main.cpp", 
+                "--std=c++11", 
+                "-o", "main.o", "src/glad.c",
+                "-I", "include",
+                "-lglfw",
+                "-lGL",
+                "-lX11",
+                "-lpthread",
+                "-lXrandr",
+                "-lXi",
+                "-ldl"
             ]
         }
     ]
