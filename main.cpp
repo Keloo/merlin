@@ -21,10 +21,13 @@ const unsigned int SCR_HEIGHT = 600;
 const char *vertexShaderSource = 
     "#version 330 core\n"
     "layout (location = 0) in vec3 aPos;\n"
+    "uniform mat4 model;\n"
+    "uniform mat4 view;\n"
+    "uniform mat4 projection;\n"
     "uniform mat4 transform;\n"
     "void main()\n"
     "{\n"
-    "   gl_Position = transform*vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    "   gl_Position = projection * view * model * transform * vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
     "}\0";
 
 const char *fragmentShaderSource = 
@@ -89,11 +92,55 @@ int main()
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
-    float vertices[] = {
-        -0.05f+0.25f, -0.05f+0.25f, 0.0f, // left  
-         0.05f+0.25f, -0.05f+0.25f, 0.0f, // right 
-         0.0f+0.25f,  0.05f+0.25f, 0.0f, // top   
-    };
+    // float vertices[] = {
+    //     -0.05f+0.25f, -0.05f+0.25f, 0.0f, // left  
+    //      0.05f+0.25f, -0.05f+0.25f, 0.0f, // right 
+    //      0.0f+0.25f,  0.05f+0.25f, 0.0f, // top   
+    // };
+
+float vertices[] = {
+    0.25f, 0.25f, 0.25f,
+     0.5f, 0.25f, 0.25f,
+     0.5f,  0.5f, 0.25f,
+     0.5f,  0.5f, 0.25f,
+    0.25f,  0.5f, 0.25f,
+    0.25f, 0.25f, 0.25f,
+
+    0.25f, 0.25f,  0.5f,
+     0.5f, 0.25f,  0.5f,
+     0.5f,  0.5f,  0.5f,
+     0.5f,  0.5f,  0.5f,
+    0.25f,  0.5f,  0.5f,
+    0.25f, 0.25f,  0.5f,
+
+    0.25f,  0.5f,  0.5f,
+    0.25f,  0.5f, 0.25f,
+    0.25f, 0.25f, 0.25f,
+    0.25f, 0.25f, 0.25f,
+    0.25f, 0.25f,  0.5f,
+    0.25f,  0.5f,  0.5f,
+
+     0.5f,  0.5f,  0.5f,
+     0.5f,  0.5f, 0.25f,
+     0.5f, 0.25f, 0.25f,
+     0.5f, 0.25f, 0.25f,
+     0.5f, 0.25f,  0.5f,
+     0.5f,  0.5f,  0.5f,
+
+    0.25f, 0.25f, 0.25f,
+     0.5f, 0.25f, 0.25f,
+     0.5f, 0.25f,  0.5f,
+     0.5f, 0.25f,  0.5f,
+    0.25f, 0.25f,  0.5f,
+    0.25f, 0.25f, 0.25f,
+
+    0.25f,  0.5f, 0.25f,
+     0.5f,  0.5f, 0.25f,
+     0.5f,  0.5f,  0.5f,
+     0.5f,  0.5f,  0.5f,
+    0.25f,  0.5f,  0.5f,
+    0.25f,  0.5f, 0.25f,
+};
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -109,11 +156,17 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, 0); 
     glBindVertexArray(0);
 
+    // 3d matrices
+    glm::mat4 model, view, projection;
+    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+    projection = glm::perspective(glm::radians(45.0f), (float) SCR_WIDTH / SCR_HEIGHT, 0.1f, 100.0f);
+
     // triangle initial position
     glm::vec3 trianglePosition(0.25f, 0.25f, 0.0f);
 
     // triangle initial speed vector
-    glm::vec3 triangleSpeed(-180.0f, 0.0f, 0.0f);
+    glm::vec3 triangleSpeed(-200.0f, 0.0f, 0.0f);
 
     // universal attraction law vector
     glm::vec3 fVector;
@@ -122,8 +175,17 @@ int main()
     glm::mat4 triangleTransform;
     // triangleTransform = glm::translate(triangleTransform, trianglePosition);
 
-    // get uniform id
+    // get transform uniform id
     int transformLocation = glGetUniformLocation(shaderProgram, "transform");
+
+    // configure 3d uniforms
+    int modelLocation = glGetUniformLocation(shaderProgram, "model");
+    int viewLocation = glGetUniformLocation(shaderProgram, "view");
+    int projectionLocation = glGetUniformLocation(shaderProgram, "projection");
+
+    glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+    glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
     // mass of the fake origin planet
     int originMass = 1;
@@ -140,22 +202,28 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-        
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
         usleep(5000);
 
         // float currentTime = (float)glfwGetTime();
         float r = glm::distance(glm::vec3(0.0f, 0.0f, 0.0f), trianglePosition);
         float f = (float)(originMass*triangleMass)/(r*r); // (universal force) newton rocks!
         fVector = trianglePosition * (-1.0f) * f * (1.0f/r); // F vector
-        std::cout << "F: " << fVector.x << ' ' << fVector.y << ' ' << fVector.z << std::endl;
-        std::cout << "Speed: " << triangleSpeed.x << ' ' << triangleSpeed.y << ' ' << triangleSpeed.z << std::endl;
-        std::cout << "Position: " << trianglePosition.x << ' ' << trianglePosition.y << ' ' << trianglePosition.z << std::endl;
-        std::cout << std::endl;
         triangleSpeed = (fVector + triangleSpeed);
         trianglePosition = trianglePosition+triangleSpeed*step;
 
         triangleTransform = glm::translate(triangleTransform, triangleSpeed*step);
+
+        // configure 3d uniforms
+        int modelLocation = glGetUniformLocation(shaderProgram, "model");
+        int viewLocation = glGetUniformLocation(shaderProgram, "view");
+        int projectionLocation = glGetUniformLocation(shaderProgram, "projection");
+
+        glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
+        glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
+
 
         // fVector = trianglePosition + glm::scale(fVector, glm::vec3(f/r, f/r, f/r)); // scale vector
         // trianglePosition = glm::translate(trianglePosition, glm::vec3(currentTime*0.01f, 0.0f, 0.0f));
