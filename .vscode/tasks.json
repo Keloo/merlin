@@ -9,9 +9,10 @@
             "command": "g++",
             "args": [
                 "-g", "main.cpp", 
-                "--std=c++11", 
+                "--std=c++17", 
                 "-o", "main.o", "src/glad.c",
-                "-I", "include",
+                "-I", "include", 
+                "-I", "src", 
                 "-lglfw",
                 "-lGL",
                 "-lX11",
