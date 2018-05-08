@@ -46,7 +46,17 @@ namespace Event {
                 }
                 return returnList;
             }
+            static EventDispatcher* const getInstance() {
+                if (instance == nullptr) {
+                    instance = new EventDispatcher();
+                }
+
+                return instance;
+            }
         private:
             std::map<std::string, std::set<EventListenerInterface*>> eventListeners;
+            static EventDispatcher *instance;
     };
 }
+
+Event::EventDispatcher* Event::EventDispatcher::instance = nullptr;

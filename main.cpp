@@ -28,18 +28,18 @@ class Console : public Event::EventListener {
 };
 
 int main() {
-    Event::EventDispatcher eventDispatcher = Event::EventDispatcher();
+    Event::EventDispatcher *eventDispatcher = Event::EventDispatcher::getInstance();
 
     MessageEvent *messageEvent = new MessageEvent();
     (*messageEvent).setMessage("hello world");
 
     Console *console = new Console();
-    eventDispatcher.addListener("message", console);
+    (*eventDispatcher).addListener("message", console);
 
-    eventDispatcher.dispatch(MessageEvent::NAME, messageEvent);
+    (*eventDispatcher).dispatch(MessageEvent::NAME, messageEvent);
 
-    eventDispatcher.removeListener(console);
-    eventDispatcher.dispatch(MessageEvent::NAME, messageEvent);
+    (*eventDispatcher).removeListener(console);
+    (*eventDispatcher).dispatch(MessageEvent::NAME, messageEvent);
 
     return 0;
 }
