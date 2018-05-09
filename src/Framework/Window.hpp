@@ -8,11 +8,14 @@ namespace Framework {
     class Window {
         private: 
             std::string title = "";
-            int width = 800, height = 600;
-            GLFWwindow *window;
+            int width = 800;
+            int height = 600;
+            GLFWwindow *glWindow;
         public: 
-            Window(std::string t = "", int w = 800, int h = 600);
+            Window(std::string, int, int h);
             ~Window();
             void init();
+            void resizeCallback(GLFWwindow*, int, int);
+            GLFWwindow* getGlWindow();
     };
 }

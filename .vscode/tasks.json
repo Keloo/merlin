@@ -10,9 +10,10 @@
             "args": [
                 "-g", "main.cpp", 
                 "--std=c++17", 
-                "-o", "main.o", "src/glad.c",
+                "-o", "main.o", "lib/glad/glad.c",
                 "-I", "include", 
-                "-I", "src", 
+                "-I", "src",
+                "-I", "lib", 
                 "-lglfw",
                 "-lGL",
                 "-lX11",

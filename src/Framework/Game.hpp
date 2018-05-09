@@ -8,7 +8,7 @@ namespace Framework {
             void run();
         private:
             void init();
-            
+            void initGlad();
             bool isRunning = true;
     };
 }

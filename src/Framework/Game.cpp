@@ -1,6 +1,6 @@
-#pragma once
+#include <iostream>
 
-#include "lib/glad/glad.h"
+#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
 #include "Framework/Game.hpp"
@@ -12,16 +12,29 @@ namespace Framework {
     
     void Game::run() {
         init();
+        Window *window = new Window("Title", 800, 600);
+        initGlad();
 
-        Window *window = new Window("Learning");
+        while (isRunning) {
+            if(glfwGetKey((*window).getGlWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+                isRunning = false;
+            }
 
-        // while (isRunning) {
-            
-        // }
+            glfwSwapBuffers((*window).getGlWindow());
+            glfwPollEvents();
+        }
     }
 
-    void init() {
+    void Game::init() {
         glfwInit();
+    }
 
+    void Game::initGlad() {
+        // @todo add logs
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+        {
+            std::cout << "Failed to initialize GLAD" << std::endl;
+            // @todo fire terminate event
+        }
     }
 }

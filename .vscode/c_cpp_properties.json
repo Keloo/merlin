@@ -3,7 +3,8 @@
         {
             "name": "Mac",
             "includePath": [
-                "include/",
+                "include",
+                "lib",
                 "src",
                 "/usr/include",
                 "/usr/local/include",
@@ -38,7 +39,8 @@
                 "/usr/include/x86_64-linux-gnu",
                 "/usr/include",
                 "${workspaceFolder}/include",
-                "${workspaceFolder}/src"
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/lib"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",

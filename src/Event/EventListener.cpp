@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Event/EventListener.hpp"
 
 #include <string>
@@ -8,7 +6,7 @@
 
 namespace Event {
     EventListener::EventListener(){};
-    EventListener::EventListener(){};
+    EventListener::~EventListener(){};
     
     void EventListener::addListenEvent(std::string eventName) {
         listenEvents.insert(eventName);
