@@ -1,8 +1,6 @@
 #include "Event/EventDispatcher.hpp"
 #include "Event/Event.hpp"
 #include "Event/EventListener.hpp"
-// #include "Event/Event.cpp"
-// #include "Event/EventListener.cpp"
 
 #include <string>
 #include <vector>

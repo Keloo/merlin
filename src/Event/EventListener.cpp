@@ -8,7 +8,7 @@
 
 namespace Event {
     EventListener::EventListener(){};
-    EventListener::~EventListener(){};
+    EventListener::EventListener(){};
     
     void EventListener::addListenEvent(std::string eventName) {
         listenEvents.insert(eventName);
