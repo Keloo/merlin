@@ -1,16 +1,21 @@
 #pragma once
 
-#include "Event/EventInterface.hpp"
+#include "Event/Event.hpp"
 
 #include <vector>
 #include <string>
+#include <set>
 
 namespace Event {
-    class EventListenerInterface {
+    class EventListener {
         public:
+            EventListener();
+            ~EventListener();
             void addListenEvent(std::string eventName);
             void removeListenEvent(std::string eventName);
             std::vector<std::string> getListenEvents();
-            virtual void onEvent(EventInterface *eventInterface)=0;
+            virtual void onEvent(Event *event)=0;
+        private:
+            std::set<std::string> listenEvents;
     };
 }

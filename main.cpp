@@ -21,7 +21,7 @@ const std::string MessageEvent::NAME = "message";
 class Console : public Event::EventListener {
     public:
         Console(){};
-        void onEvent(Event::EventInterface *event) {
+        void onEvent(Event::Event *event) {
             MessageEvent *messageEvent = static_cast<MessageEvent*>(event);
             std::cout << (*messageEvent).getMessage();
         }

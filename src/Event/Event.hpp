@@ -1,8 +1,10 @@
 #pragma once
 
 namespace Event {
-    class EventInterface {
+    class Event {
         public:
+            Event();
+            ~Event();
             void stopPropagation();
             bool isPropagationStopped();
         private:

@@ -7,9 +7,9 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # Include dirs
-include_directories("${PROJECT_SOURCE_DIR}/include" "${PROJECT_SOURCE_DIR}/src")
+include_directories("${PROJECT_SOURCE_DIR}/lib" "${PROJECT_SOURCE_DIR}/src")
 
-add_library(glad include/glad/glad.h src/glad.c)
+add_library(glad lib/glad/glad.h lib/glad/glad.c)
 
 file(GLOB SOURCES "src/*.cpp")
 

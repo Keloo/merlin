@@ -1,18 +1,16 @@
 #pragma once
 
-#include "Event/EventInterface.hpp"
+#include "Event/Event.hpp"
 
 namespace Event {
-    class Event: public EventInterface {
-        public:
-            Event(): propagationStopped(false) {};
-            void stopPropagation() {
-                propagationStopped = true;
-            }
-            bool isPropagationStopped() {
-                return propagationStopped;
-            }
-        private:
-            bool propagationStopped;
-    };
+    Event::Event(): propagationStopped(false) {};
+    Event::~Event(){};
+
+    void Event::stopPropagation() {
+        propagationStopped = true;
+    }
+    
+    bool Event::isPropagationStopped() {
+        return propagationStopped;
+    }
 }
