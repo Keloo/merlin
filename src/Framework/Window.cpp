@@ -7,6 +7,7 @@ namespace Framework {
     Window::~Window(){};
 
     void Window::init() {
+        glfwInit();                
         glWindow = glfwCreateWindow(this->width, this->height, this->title.c_str(), nullptr, nullptr);
         // @todo handle error
         glfwMakeContextCurrent(glWindow);

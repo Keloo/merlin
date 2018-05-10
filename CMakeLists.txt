@@ -11,7 +11,13 @@ include_directories("${PROJECT_SOURCE_DIR}/lib" "${PROJECT_SOURCE_DIR}/src")
 
 add_library(glad lib/glad/glad.h lib/glad/glad.c)
 
-file(GLOB SOURCES "src/*.cpp" "src/Framework/*.cpp" "src/Event/*.cpp" "src/Component/*.cpp")
+file(GLOB SOURCES 
+    "src/*.cpp" 
+    "src/Framework/*.cpp" 
+    "src/Event/*.cpp" 
+    "src/Event/Game/*.cpp" 
+    "src/Component/*.cpp"
+)
 
 # Compiled by us
 add_executable(Merlin ${SOURCES} "main.cpp")

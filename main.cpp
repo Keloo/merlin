@@ -1,7 +1,7 @@
-#include "Framework/Game.hpp"
+#include "DemoGame.cpp"
 
 int main() {
-    Framework::Game g;
+    DemoGame g;
     g.run();
 
     return 0;

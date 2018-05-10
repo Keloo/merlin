@@ -1,4 +1,6 @@
 #include "Component/Logger.hpp"
+#include "Event/EventDispatcher.hpp"
+#include "Event/Game/TerminateEvent.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -6,6 +8,8 @@
 #include <ctime>
 
 namespace Component {
+    using namespace Event;
+
     Logger::Logger(){};
     Logger::~Logger(){};
 
@@ -15,7 +19,8 @@ namespace Component {
         std::ofstream fo(logFile);
         if (!fo.is_open()) {
             std::cout << "Error, can not open log file" << std::endl;
-            return; // @TODO Maybe throw terminate event
+            EventDispatcher::getInstance()->dispatch(Game::TerminateEvent::NAME, new Game::TerminateEvent());
+            return;
         }
         auto nowClock = std::chrono::system_clock::now();
         std::time_t nowTime = std::chrono::system_clock::to_time_t(nowClock);
