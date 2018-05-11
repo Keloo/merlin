@@ -1,7 +1,10 @@
-#include "Framework/Shader.hpp"
-#include "Component/Logger.hpp"
 #include "Event/EventDispatcher.hpp"
 #include "Event/Game/TerminateEvent.hpp"
+
+#include "Framework/Shader.hpp"
+#include "Framework/GLDebug.hpp"
+
+#include "Component/Logger.hpp"
 
 #include <fstream>
 
@@ -41,4 +44,20 @@ namespace Framework {
     Shader::ShaderType Shader::getType() {
         return type;
     }
+
+    unsigned int Shader::getGlType() {
+        switch (type) {
+            case ShaderType::Fragment:
+                return GL_FRAGMENT_SHADER;
+            case ShaderType::Vertex:
+                return GL_VERTEX_SHADER;
+            default:
+                throw std::exception();
+        }
+    }
+
+    void Shader::compile() {
+        glShaderId = GLCall(glCreateShader(getGlType()));
+    }
+
 }

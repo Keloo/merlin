@@ -1,8 +1,8 @@
 #pragma once
 
-#include <string>
-
 #include "Event/Event.hpp"
+
+#include <string>
 
 namespace Event { namespace Game {
     class TerminateEvent: public Event {

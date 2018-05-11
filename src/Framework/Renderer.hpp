@@ -6,5 +6,6 @@ namespace Framework {
             Renderer();
             ~Renderer();
             void init();
+            void draw();
     };
 }

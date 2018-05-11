@@ -1,11 +1,12 @@
 #pragma once
 
+#include "Event/EventListener.hpp"
+#include "Event/Event.hpp"
+
 #include <vector>
 #include <string>
 #include <map>
 #include <set>
-#include "Event/EventListener.hpp"
-#include "Event/Event.hpp"
 
 namespace Event {
     class EventDispatcher {

@@ -1,4 +1,5 @@
 #include "Component/Logger.hpp"
+
 #include "Event/EventDispatcher.hpp"
 #include "Event/Game/TerminateEvent.hpp"
 

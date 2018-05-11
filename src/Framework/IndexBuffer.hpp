@@ -1,6 +1,5 @@
 #pragma once
 
-
 namespace Framework {
     class IndexBuffer {
         public:
