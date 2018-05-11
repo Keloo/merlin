@@ -6,7 +6,7 @@
 
 #define GLCall(x) glGetError(); x; if (!GLLogCall(#x, __FILE__, __LINE__)) __builtin_trap();
 
-inline std::string glErrorCodeToString(int errorCode) {
+inline std::string GLErrorCodeToString(int errorCode) {
     std::string error;
     switch (errorCode) {
         case GL_INVALID_ENUM:                  error = "INVALID_ENUM"; break;
@@ -25,10 +25,10 @@ bool GLLogCall(const char* function, const char* file, int32_t line) {
     unsigned int errorCode = glGetError();
     if (errorCode != GL_NO_ERROR) {
         Component::Logger::error(
-            "[OpenGL Error] (" + glErrorCodeToString(errorCode) + "): " + 
+            "[OpenGL Error] (" + GLErrorCodeToString(errorCode) + "): " + 
             std::string(function) + " " + std::string(file) + ":" + std::to_string(line)
         );
-        
+
         return false;
     }
 
