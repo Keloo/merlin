@@ -13,10 +13,10 @@ namespace Component {
     Logger::Logger(){};
     Logger::~Logger(){};
 
-    std::string Logger::logFile = "var/logs/log.txt";
+    std::string Logger::logFile = "./../var/logs/log.txt";
 
     void Logger::log(std::string message, std::string type) {
-        std::ofstream fo(logFile);
+        std::ofstream fo(logFile, std::ios_base::app);
         if (!fo.is_open()) {
             std::cout << "Error, can not open log file" << std::endl;
             EventDispatcher::getInstance()->dispatch(Game::TerminateEvent::NAME, new Game::TerminateEvent());
@@ -24,7 +24,7 @@ namespace Component {
         }
         auto nowClock = std::chrono::system_clock::now();
         std::time_t nowTime = std::chrono::system_clock::to_time_t(nowClock);
-        fo << "[" << std::ctime(&nowTime) << "][" << type << "]: " << message << std:: endl;
+        fo << '\n' << std::ctime(&nowTime) << "[" << type << "]: " << message << std:: endl;
 
         fo.close();
     }

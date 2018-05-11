@@ -34,8 +34,8 @@ namespace Framework {
         }
     }
 
-    void Shader::setType(Shader::ShaderType type) {
-        this->type = type;
+    void Shader::setType(Shader::ShaderType t) {
+        type = t;
     }
 
     Shader::ShaderType Shader::getType() {

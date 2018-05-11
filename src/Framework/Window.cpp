@@ -1,5 +1,9 @@
 #include "Framework/Window.hpp"
 
+#include <iostream>
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
+
 namespace Framework {
     Window::Window(std::string t = "", int w = 800, int h = 600): title(t), width(w), height(h) {
         init();
@@ -7,21 +11,12 @@ namespace Framework {
     Window::~Window(){};
 
     void Window::init() {
-        glfwInit();                
-        glWindow = glfwCreateWindow(this->width, this->height, this->title.c_str(), nullptr, nullptr);
-        // @todo handle error
-        glfwMakeContextCurrent(glWindow);
-        glViewport(0, 0, this->width, this->height);
-        // glfwSetFramebufferSizeCallback(window, resizeCallback);
+        glfwInit();
+        glWindow = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+        glfwMakeContextCurrent(glWindow);        
     }
 
     GLFWwindow* Window::getGlWindow() {
         return glWindow;
     }
-
-    // void Window::resizeCallback(GLFWwindow* window, int w, int h) {
-    //     width = w;
-    //     height = h;
-    //     glViewport(0, 0, width, height);
-    // }
 }
