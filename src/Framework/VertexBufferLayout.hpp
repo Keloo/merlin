@@ -7,6 +7,8 @@
 namespace Framework {
     class VertexBufferLayout {
         public:
+            VertexBufferLayout();
+            ~VertexBufferLayout();
             void pushFloat(unsigned int count);
             void pushByte(unsigned int count);
             void pushUnsignedInt(unsigned int count);

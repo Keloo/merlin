@@ -1,6 +1,8 @@
+#include "Component/Exception.hpp"
+
 #include "Framework/Renderer.hpp"
-#include "Component/Logger.hpp"
 #include "Framework/GLDebug.hpp"
+#include "Framework/Shader.hpp"
 
 #include <iostream>
 
@@ -10,17 +12,24 @@
 namespace Framework {
     Renderer::Renderer(){
         init();
+        glProgramId = glCreateProgram();
     };
 
     Renderer::~Renderer(){};
 
     void Renderer::init() {
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-            Component::Logger::error("Failed to initialize GLAD");
+            throw new Component::Exception("Failed to initialize GLAD");
         }
     }
 
-    void Renderer::draw() {
-        
+    void Renderer::draw(Shader *vertexShader, Shader *fragmentShader) {
+        GLCall(glAttachShader(glProgramId, (*vertexShader).getId()));
+        GLCall(glAttachShader(glProgramId, (*fragmentShader).getId()));
+        GLCall(glLinkProgram(glProgramId));
+        GLCall(glUseProgram(glProgramId));
+        // add some error checking
+
+        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0));
     }
 }

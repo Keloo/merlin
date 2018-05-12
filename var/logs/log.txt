@@ -1,3 +1,6 @@
 
 Fri May 11 20:58:25 2018
 [Error]: [OpenGL Error] (INVALID_ENUM): glTexImage2D(GL_TEXTURE_3D, 0, GL_RGB, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, data) /home/keloo/Projects/merlin/src/Framework/Renderer.cpp:23
+
+Sat May 12 13:45:05 2018
+[Error]: Can not open shader file./res/shader.main.vs

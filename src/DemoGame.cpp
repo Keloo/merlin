@@ -38,9 +38,6 @@ class DemoGame: public Component::Game {
                 Framework::Shader *vertexShader = new Framework::Shader("./res/shader.main.vs");
                 Framework::Shader *fragmentShader = new Framework::Shader("./res/shader.main.fs");
 
-                (*vertexShader).compile();
-                (*fragmentShader).compile();
-
                 while (isRunning) {
                     if(glfwGetKey((*window).getGlWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
                         isRunning = false;

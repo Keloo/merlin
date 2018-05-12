@@ -10,6 +10,15 @@ namespace Framework {
 
     Shader::Shader(std::string path) {
         loadFromFile(path);
+        compile();
+    }
+
+    Shader::~Shader() {
+        GLCall(glDeleteShader(glShaderId));
+    }
+
+    unsigned int Shader::getId() {
+        return glShaderId;
     }
 
     void Shader::loadFromFile(std::string path) {
