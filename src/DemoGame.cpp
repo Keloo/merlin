@@ -7,11 +7,14 @@
 #include "Framework/VertexBuffer.hpp"
 #include "Framework/IndexBuffer.hpp"
 #include "Framework/Shader.hpp"
+#include "Framework/VertexArray.hpp"
 
 #include <iostream>
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
+
+using namespace Framework;
 
 class DemoGame: public Component::Game {
     public:
@@ -32,11 +35,15 @@ class DemoGame: public Component::Game {
                     1, 2, 3    // second triangle
                 };
 
-                Framework::VertexBuffer *vertexBuffer = new Framework::VertexBuffer(vertices, sizeof(vertices));
-                Framework::IndexBuffer *indexBuffer = new Framework::IndexBuffer(indices, 6);
+                VertexBuffer *vertexBuffer = new VertexBuffer(vertices, sizeof(vertices));
+                VertexBufferLayout *vertexBufferLayout = new VertexBufferLayout();
+                (*vertexBufferLayout).pushFloat(3);
+                IndexBuffer *indexBuffer = new IndexBuffer(indices, 6);
+                VertexArray *vertexArray = new VertexArray();
+                (*vertexArray).addBuffer(*vertexBuffer, *vertexBufferLayout);
 
-                Framework::Shader *vertexShader = new Framework::Shader("./res/shader.main.vs");
-                Framework::Shader *fragmentShader = new Framework::Shader("./res/shader.main.fs");
+                Shader *vertexShader = new Shader("./res/shader/main.vs", Shader::ShaderType::Vertex);
+                Shader *fragmentShader = new Shader("./res/shader/main.fs", Shader::ShaderType::Fragment);
 
                 while (isRunning) {
                     if(glfwGetKey((*window).getGlWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
@@ -51,11 +58,11 @@ class DemoGame: public Component::Game {
         }
 
         void init() {
-            window = new Framework::Window("Title", 800, 600);
-            renderer = new Framework::Renderer();
+            window = new Window("Title", 800, 600);
+            renderer = new Renderer();
         }
     private:
         bool isRunning = true;
-        Framework::Window *window;
-        Framework::Renderer *renderer;
+        Window *window;
+        Renderer *renderer;
 };

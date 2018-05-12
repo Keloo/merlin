@@ -4,11 +4,18 @@
 #include "Component/Exception.hpp"
 
 #include <fstream>
+#include <iostream>
 
 namespace Framework {
     using namespace Component;
 
     Shader::Shader(std::string path) {
+        loadFromFile(path);
+        compile();
+    }
+
+    Shader::Shader(std::string path, Shader::ShaderType t) {
+        type = t;
         loadFromFile(path);
         compile();
     }
@@ -30,12 +37,6 @@ namespace Framework {
 
         std::string line;
         while (std::getline(fi, line)) {
-            if (line.find("#shader") != std::string::npos) {
-                if (line.find("vertex") != std::string::npos) 
-                    setType(ShaderType::Vertex);
-                else if (line.find("fragment") != std::string::npos) 
-                    setType(ShaderType::Fragment);
-            }
             source +=  line + '\n';
         }
     }
@@ -69,14 +70,19 @@ namespace Framework {
     }
 
     void Shader::compile() {
-        glShaderId = GLCall(glCreateShader(getGlType()));
+        glShaderId = glCreateShader(getGlType());
+        const char *shaderSource = source.c_str();
+       
+        GLCall(glShaderSource(glShaderId, 1, &shaderSource, NULL));
+        GLCall(glCompileShader(glShaderId));
 
         int success;
         char infoLog[512];
         glGetShaderiv(glShaderId, GL_COMPILE_STATUS, &success);
         if (!success) {
             glGetShaderInfoLog(glShaderId, 512, NULL, infoLog);
-            throw new Exception(getTypeToString() + ":SHADER:COMPILATION:FAILED" + infoLog);
+            std::cout << infoLog << std::endl;
+            throw new Exception(getTypeToString() + ":SHADER:COMPILATION:FAILED" + std::string(infoLog));
         }
     }
 }

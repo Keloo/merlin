@@ -10,7 +10,7 @@ namespace Framework {
         GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), data, GL_STATIC_DRAW));
     };
 
-    IndexBuffer::~IndexBuffer(){
+    IndexBuffer::~IndexBuffer() {
         GLCall(glDeleteBuffers(1, &glIndexBufferId));
     };
 

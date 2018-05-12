@@ -14,7 +14,7 @@ namespace Component {
     Logger::Logger(){};
     Logger::~Logger(){};
 
-    std::string Logger::logFile = "./../var/logs/log.txt";
+    std::string Logger::logFile = "./var/logs/log.txt";
 
     void Logger::log(std::string message, std::string type) {
         std::ofstream fo(logFile, std::ios_base::app);
