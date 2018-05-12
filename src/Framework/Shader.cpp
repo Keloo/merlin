@@ -1,6 +1,3 @@
-#include "Event/EventDispatcher.hpp"
-#include "Event/Game/TerminateEvent.hpp"
-
 #include "Framework/Shader.hpp"
 #include "Framework/GLDebug.hpp"
 
@@ -9,7 +6,6 @@
 #include <fstream>
 
 namespace Framework {
-    using namespace Event;
     using namespace Component;
 
     Shader::Shader(std::string path) {
@@ -54,7 +50,24 @@ namespace Framework {
         }
     }
 
+    std::string Shader::getTypeToString() {
+        switch (type) {
+            case ShaderType::Vertex: return "VERTEX";
+            case ShaderType::Fragment: return "FRAGMENT";
+        }
+
+        return "NONE";
+    }
+
     void Shader::compile() {
         glShaderId = GLCall(glCreateShader(getGlType()));
+
+        int success;
+        char infoLog[512];
+        glGetShaderiv(glShaderId, GL_COMPILE_STATUS, &success);
+        if (!success) {
+            glGetShaderInfoLog(glShaderId, 512, NULL, infoLog);
+            throw new Exception(getTypeToString() + ":SHADER:COMPILATION:FAILED" + infoLog);
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace Framework {
             void compile();
             unsigned int getGlType();
         private:
+            std::string getTypeToString();
             std::string source;
             ShaderType type = ShaderType::None;
             unsigned int glShaderId;
