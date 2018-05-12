@@ -4,7 +4,7 @@
 #include "Framework/Shader.hpp"
 #include "Framework/GLDebug.hpp"
 
-#include "Component/Logger.hpp"
+#include "Component/Exception.hpp"
 
 #include <fstream>
 
@@ -20,9 +20,7 @@ namespace Framework {
         std::ifstream fi(path);
 
         if (!fi.is_open()) {
-            Logger::error("Can not open Shader file: "+path);
-            EventDispatcher::getInstance()->dispatch(Game::TerminateEvent::NAME, new Game::TerminateEvent());
-            return;
+            throw new Exception("Can not open shader file" + path);
         }
 
         std::string line;
@@ -52,12 +50,11 @@ namespace Framework {
             case ShaderType::Vertex:
                 return GL_VERTEX_SHADER;
             default:
-                throw std::exception();
+                throw new Exception("Invalid shader type");
         }
     }
 
     void Shader::compile() {
         glShaderId = GLCall(glCreateShader(getGlType()));
     }
-
 }
