@@ -24,6 +24,14 @@ class DemoGame: public Component::Game {
             try {
                 init();
 
+                Shader *vertexShader = new Shader("./res/shader/main.vs", Shader::ShaderType::Vertex);
+                Shader *fragmentShader = new Shader("./res/shader/main.fs", Shader::ShaderType::Fragment);
+
+                (*renderer).createProgram();
+                (*renderer).attachShader(vertexShader);
+                (*renderer).attachShader(fragmentShader);
+                (*renderer).link();
+
                 float vertices[] = {
                     0.5f,  0.5f, 0.0f,  // top right
                     0.5f, -0.5f, 0.0f,  // bottom right
@@ -31,27 +39,31 @@ class DemoGame: public Component::Game {
                     -0.5f,  0.5f, 0.0f   // top left 
                 };
                 unsigned int indices[] = {  // note that we start from 0!
-                    0, 1, 3,   // first triangle
-                    1, 2, 3    // second triangle
+                    0, 1, 3,  // first Triangle
+                    1, 2, 3   // second Triangle
                 };
 
+                VertexArray *vertexArray = new VertexArray();
+                (*vertexArray).bind();
                 VertexBuffer *vertexBuffer = new VertexBuffer(vertices, sizeof(vertices));
+                IndexBuffer *indexBuffer = new IndexBuffer(indices, 6);
                 VertexBufferLayout *vertexBufferLayout = new VertexBufferLayout();
                 (*vertexBufferLayout).pushFloat(3);
-                IndexBuffer *indexBuffer = new IndexBuffer(indices, 6);
-                VertexArray *vertexArray = new VertexArray();
+
                 (*vertexArray).addBuffer(*vertexBuffer, *vertexBufferLayout);
 
-                Shader *vertexShader = new Shader("./res/shader/main.vs", Shader::ShaderType::Vertex);
-                Shader *fragmentShader = new Shader("./res/shader/main.fs", Shader::ShaderType::Fragment);
-
                 while (isRunning) {
-                    if(glfwGetKey((*window).getGlWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+                    if (glfwGetKey((*window).getGlWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
                         isRunning = false;
                     }
+
+                    (*renderer).draw();
+
                     glfwSwapBuffers((*window).getGlWindow());
                     glfwPollEvents();
                 }
+
+
             } catch (Component::Exception *e) {
                 Component::Logger::error((*e).getMessage());
             }

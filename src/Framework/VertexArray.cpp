@@ -4,6 +4,7 @@
 namespace Framework {
     VertexArray::VertexArray(){
         GLCall(glGenVertexArrays(1, &glVertexArrayId));
+        bind();
     };
     VertexArray::~VertexArray(){
         GLCall(glDeleteVertexArrays(1, &glVertexArrayId));        

@@ -8,7 +8,11 @@ namespace Framework {
             Renderer();
             ~Renderer();
             void init();
-            void draw(Shader*, Shader*);
+            void draw();
+            void createProgram();
+            void link() const;
+            void attachShader(Shader*) const;
+            unsigned int getGlProgramId();
         private:
             unsigned int glProgramId;
     };

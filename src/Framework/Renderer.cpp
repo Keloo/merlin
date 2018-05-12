@@ -12,7 +12,6 @@
 namespace Framework {
     Renderer::Renderer(){
         init();
-        glProgramId = glCreateProgram();
     };
 
     Renderer::~Renderer(){};
@@ -23,10 +22,23 @@ namespace Framework {
         }
     }
 
-    void Renderer::draw(Shader *vertexShader, Shader *fragmentShader) {
-        GLCall(glAttachShader(glProgramId, (*vertexShader).getId()));
-        GLCall(glAttachShader(glProgramId, (*fragmentShader).getId()));
+    unsigned int Renderer::getGlProgramId() {
+        return glProgramId;
+    }
+
+    void Renderer::createProgram() {
+        glProgramId = glCreateProgram();        
+    }
+
+    void Renderer::attachShader(Shader* shader) const {
+        GLCall(glAttachShader(glProgramId, (*shader).getId()));
+    }
+
+    void Renderer::link() const {
         GLCall(glLinkProgram(glProgramId));
+    }
+
+    void Renderer::draw() {
         GLCall(glUseProgram(glProgramId));
         // add some error checking
 
