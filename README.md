@@ -1,8 +1,4 @@
-# Merlin engine (A simple C++ OpenGL game engine that rocks)
+# Merlin: A simple C++/OpenGL game engine for learning purpose
 
-### Installation
-- mkdir build
-- cd build
-- cmake ..
-- make
-- ./Merlin
+### Instalation: ./install.sh
+### Running ./build/Merlin
