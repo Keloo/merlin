@@ -10,7 +10,7 @@
             "args": [
                 "-g", "main.cpp", 
                 "--std=c++17", 
-                "-o", "main.o", "lib/glad/glad.c", "src/Framework/*.cpp", "src/Event/*.cpp", "src/Component/*.cpp", "src/Event/Game/*.cpp",
+                "-o", "main.o", "lib/glad/glad.c", "src/Framework/*.cpp", "src/Event/*.cpp", "src/Component/*.cpp", "src/Component/Camera/*.cpp", "src/Event/Game/*.cpp",
                 "-I", "include", 
                 "-I", "src",
                 "-I", "lib",

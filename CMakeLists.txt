@@ -17,6 +17,7 @@ file(GLOB SOURCES
     "src/Event/*.cpp" 
     "src/Event/Game/*.cpp" 
     "src/Component/*.cpp"
+    "src/Component/Camera/*.cpp"
 )
 
 # Compiled by us

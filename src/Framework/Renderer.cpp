@@ -12,8 +12,9 @@
 #include "GLFW/glfw3.h"
 
 namespace Framework {
-    Renderer::Renderer(): drawMode(Renderer::DrawMode::Triangle), glProgramId(glCreateProgram()) {
+    Renderer::Renderer(): drawMode(Renderer::DrawMode::Triangle) {
         init();
+        glProgramId = glCreateProgram();
     };
 
     Renderer::~Renderer(){};
