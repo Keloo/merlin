@@ -1,3 +1,5 @@
+#include "Event/Keyboard/PressEvent.hpp"
+
 #include "Component/Camera/FPSCamera.hpp"
 
 #include "glm/vec3.hpp"
@@ -6,6 +8,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include <math.h>
+#include <iostream>
 
 namespace Component { namespace Camera {
     FPSCamera::FPSCamera(
@@ -19,6 +22,8 @@ namespace Component { namespace Camera {
         yaw = _yaw;
         pitch = _pitch;
         updateCameraVectors();
+
+        addListenEvent(Event::Keyboard::PressEvent::NAME);
     };
 
     FPSCamera::~FPSCamera(){};
@@ -35,5 +40,9 @@ namespace Component { namespace Camera {
         frontVector = glm::normalize(front);
         rightVector = glm::normalize(glm::cross(frontVector, worldUpVector));
         upVector    = glm::normalize(glm::cross(rightVector, frontVector));
+    }
+
+    void FPSCamera::onEvent(Event::Event *event) {
+        std::cout << "in event";
     }
 }}

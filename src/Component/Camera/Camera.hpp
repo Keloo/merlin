@@ -1,9 +1,11 @@
 #pragma once
 
+#include "Event/EventListener.hpp"
+
 #include "glm/vec3.hpp"
 
 namespace Component { namespace Camera {
-    class Camera {
+    class Camera: public Event::EventListener {
         public:
             Camera();
             ~Camera();

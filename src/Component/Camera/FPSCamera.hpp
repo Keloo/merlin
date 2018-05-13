@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Event/Event.hpp"
+
 #include "Component/Camera/Camera.hpp"
 
 #include "glm/vec3.hpp"
@@ -18,6 +20,8 @@ namespace Component { namespace Camera {
             ~FPSCamera();
 
             glm::mat4 getViewMatrix();
+
+            virtual void onEvent(Event::Event*) = 0;
         private:
             float yaw;
             float pitch;
