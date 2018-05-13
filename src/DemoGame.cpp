@@ -14,8 +14,6 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-#include "glm/vec3.hpp"
-
 using namespace Framework;
 
 class DemoGame: public Component::Game {
@@ -29,7 +27,6 @@ class DemoGame: public Component::Game {
                 Shader *vertexShader = new Shader("./res/shader/main.vs", Shader::ShaderType::Vertex);
                 Shader *fragmentShader = new Shader("./res/shader/main.fs", Shader::ShaderType::Fragment);
 
-                (*renderer).createProgram();
                 (*renderer).attachShader(vertexShader);
                 (*renderer).attachShader(fragmentShader);
                 (*renderer).link();
@@ -46,25 +43,25 @@ class DemoGame: public Component::Game {
                 };
 
                 VertexArray *vertexArray = new VertexArray();
-                (*vertexArray).bind();
                 VertexBuffer *vertexBuffer = new VertexBuffer(vertices, sizeof(vertices));
-                IndexBuffer *indexBuffer = new IndexBuffer(indices, 6);
+
                 VertexBufferLayout *vertexBufferLayout = new VertexBufferLayout();
                 (*vertexBufferLayout).pushFloat(3);
 
                 (*vertexArray).addBuffer(*vertexBuffer, *vertexBufferLayout);
+
+                IndexBuffer *indexBuffer = new IndexBuffer(indices, 6);
 
                 while (isRunning) {
                     if (glfwGetKey((*window).getGlWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
                         isRunning = false;
                     }
 
-                    (*renderer).draw();
+                    (*renderer).draw(vertexArray, indexBuffer);
 
                     glfwSwapBuffers((*window).getGlWindow());
                     glfwPollEvents();
                 }
-
 
             } catch (Component::Exception *e) {
                 Component::Logger::error((*e).getMessage());

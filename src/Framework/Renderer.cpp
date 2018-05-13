@@ -3,6 +3,8 @@
 #include "Framework/Renderer.hpp"
 #include "Framework/GLDebug.hpp"
 #include "Framework/Shader.hpp"
+#include "Framework/VertexArray.hpp"
+#include "Framework/IndexBuffer.hpp"
 
 #include <iostream>
 
@@ -12,6 +14,7 @@
 namespace Framework {
     Renderer::Renderer(){
         init();
+        glProgramId = glCreateProgram();        
     };
 
     Renderer::~Renderer(){};
@@ -26,10 +29,6 @@ namespace Framework {
         return glProgramId;
     }
 
-    void Renderer::createProgram() {
-        glProgramId = glCreateProgram();        
-    }
-
     void Renderer::attachShader(Shader* shader) const {
         GLCall(glAttachShader(glProgramId, (*shader).getId()));
     }
@@ -38,10 +37,11 @@ namespace Framework {
         GLCall(glLinkProgram(glProgramId));
     }
 
-    void Renderer::draw() {
+    void Renderer::draw(VertexArray *vertexArray, IndexBuffer *indexBuffer) {
         GLCall(glUseProgram(glProgramId));
-        // add some error checking
+        (*vertexArray).bind();
+        (*indexBuffer).bind();
 
-        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0));
+        GLCall(glDrawElements(GL_TRIANGLES, (*indexBuffer).getCount(), GL_UNSIGNED_INT, 0));
     }
 }

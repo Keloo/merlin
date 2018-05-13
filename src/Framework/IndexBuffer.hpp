@@ -8,6 +8,8 @@ namespace Framework {
 
             void bind() const;
             void unbind() const;
+
+            unsigned int getCount();
         private:
             unsigned int glIndexBufferId;
             unsigned int count;

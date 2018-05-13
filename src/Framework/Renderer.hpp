@@ -1,6 +1,8 @@
 #pragma once 
 
 #include "Framework/Shader.hpp"
+#include "Framework/IndexBuffer.hpp"
+#include "Framework/VertexArray.hpp"
 
 namespace Framework {
     class Renderer {
@@ -8,8 +10,7 @@ namespace Framework {
             Renderer();
             ~Renderer();
             void init();
-            void draw();
-            void createProgram();
+            void draw(VertexArray*, IndexBuffer*);
             void link() const;
             void attachShader(Shader*) const;
             unsigned int getGlProgramId();

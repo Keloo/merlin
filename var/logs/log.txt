@@ -1,0 +1,6 @@
+
+Sun May 13 13:18:19 2018
+[Error]: [OpenGL Error] (INVALID_OPERATION): glUseProgram(glProgramId) /home/keloo/Projects/merlin/src/Framework/Renderer.cpp:16
+
+Sun May 13 13:18:43 2018
+[Error]: [OpenGL Error] (INVALID_OPERATION): glUseProgram(glProgramId) /home/keloo/Projects/merlin/src/Framework/Renderer.cpp:18
