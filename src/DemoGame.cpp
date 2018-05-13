@@ -57,6 +57,7 @@ class DemoGame: public Component::Game {
                         isRunning = false;
                     }
 
+                    (*renderer).clear();
                     (*renderer).draw(vertexArray, indexBuffer);
 
                     glfwSwapBuffers((*window).getGlWindow());

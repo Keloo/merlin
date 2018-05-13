@@ -7,6 +7,7 @@
 namespace Framework {
     class Renderer {
         public:
+            enum class DrawMode { Triangle = 0, Line = 1 };
             Renderer();
             ~Renderer();
             void init();
@@ -14,7 +15,12 @@ namespace Framework {
             void link() const;
             void attachShader(Shader*) const;
             unsigned int getGlProgramId();
+            void clear() const;
+            unsigned int getGlDrawMode();
+            DrawMode getDrawMode();
+            void setDrawMode(DrawMode d);
         private:
             unsigned int glProgramId;
+            DrawMode drawMode;
     };
 }
