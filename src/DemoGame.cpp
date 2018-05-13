@@ -14,6 +14,8 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
+#include "glm/vec3.hpp"
+
 using namespace Framework;
 
 class DemoGame: public Component::Game {
