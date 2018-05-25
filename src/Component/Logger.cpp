@@ -14,13 +14,13 @@ namespace Component {
     Logger::Logger(){};
     Logger::~Logger(){};
 
-    std::string Logger::logFile = "./var/logs/log.txt";
+    std::string Logger::logFile = "./../var/logs/log.txt";
 
     void Logger::log(std::string message, std::string type) {
         std::ofstream fo(logFile, std::ios_base::app);
         if (!fo.is_open()) {
             std::cout << "Error, can not open log file" << std::endl;
-            EventDispatcher::getInstance()->dispatch(Game::TerminateEvent::NAME, new Game::TerminateEvent());
+            EventDispatcher::getInstance().dispatch(Game::TerminateEvent::NAME, new Game::TerminateEvent());
             return;
         }
         auto nowClock = std::chrono::system_clock::now();

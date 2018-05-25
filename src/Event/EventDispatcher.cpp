@@ -9,11 +9,7 @@
 #include <iostream>
 
 namespace Event {
-    EventDispatcher* EventDispatcher::instance = nullptr;
-    
-    EventDispatcher::EventDispatcher(){};
-    EventDispatcher::~EventDispatcher(){};
-    
+    EventDispatcher::EventDispatcher() = default;
 
     void EventDispatcher::dispatch(std::string eventName, Event *event) {
         if ((*event).isPropagationStopped()) {
@@ -25,7 +21,7 @@ namespace Event {
     }
     
     void EventDispatcher::addListener(std::vector<std::string> eventNames, EventListener *eventListener) {
-        for (auto eventName: eventNames) {
+        for (auto const & eventName: eventNames) {
             addListener(eventName, eventListener);
         }
     }
@@ -36,10 +32,11 @@ namespace Event {
     }
     
     void EventDispatcher::removeListener(EventListener *eventListener) {
-        for (std::string eventName: (*eventListener).getListenEvents()) {
+        for (std::string const & eventName: (*eventListener).getListenEvents()) {
             eventListeners[eventName].erase(eventListener);
         }
     }
+
     std::vector<EventListener*> EventDispatcher::getListeners(std::string eventName) {
         std::vector<EventListener*> returnList;
         for (auto listener: eventListeners[eventName]) {
@@ -47,10 +44,9 @@ namespace Event {
         }
         return returnList;
     }
-    EventDispatcher* EventDispatcher::getInstance() {
-        if (instance == nullptr) {
-            instance = new EventDispatcher();
-        }
+
+    EventDispatcher& EventDispatcher::getInstance() {
+        static EventDispatcher instance; // singleton trick (initialized only once, destroyed correctly)
 
         return instance;
     }

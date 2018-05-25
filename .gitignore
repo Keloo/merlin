@@ -1,3 +1,5 @@
 /main.o
 /build
 /var/logs/log.txt
+/.idea
+/cmake-build-debug

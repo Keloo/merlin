@@ -15,7 +15,8 @@ file(GLOB SOURCES
     "src/*.cpp" 
     "src/Framework/*.cpp" 
     "src/Event/*.cpp" 
-    "src/Event/Game/*.cpp" 
+    "src/Event/Game/*.cpp"
+    "src/Event/Keyboard/*.cpp"
     "src/Component/*.cpp"
     "src/Component/Camera/*.cpp"
 )

@@ -32,12 +32,12 @@ namespace Framework {
         std::ifstream fi(path);
 
         if (!fi.is_open()) {
-            throw new Exception("Can not open shader file" + path);
+            throw new Exception("Can not open shader file " + path);
         }
 
         std::string line;
         while (std::getline(fi, line)) {
-            source +=  line + '\n';
+            source +=  line + "\n";
         }
     }
 

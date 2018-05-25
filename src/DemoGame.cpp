@@ -18,14 +18,15 @@ using namespace Framework;
 
 class DemoGame: public Component::Game {
     public:
-        ~DemoGame(){};
+        DemoGame(): window(nullptr), renderer(nullptr) {};
+        ~DemoGame() = default;
 
-        void run() {
+        void run() override {
             try {
                 init();
 
-                Shader *vertexShader = new Shader("./res/shader/main.vs", Shader::ShaderType::Vertex);
-                Shader *fragmentShader = new Shader("./res/shader/main.fs", Shader::ShaderType::Fragment);
+                Shader *vertexShader = new Shader("./../res/shader/main.vs", Shader::ShaderType::Vertex);
+                Shader *fragmentShader = new Shader("./../res/shader/main.fs", Shader::ShaderType::Fragment);
 
                 (*renderer).attachShader(vertexShader);
                 (*renderer).attachShader(fragmentShader);
