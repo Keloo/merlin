@@ -2,7 +2,7 @@
 
 namespace Event {
     Event::Event(): propagationStopped(false) {};
-    Event::~Event(){};
+    Event::~Event() = default;
 
     void Event::stopPropagation() {
         propagationStopped = true;

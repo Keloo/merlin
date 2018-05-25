@@ -10,24 +10,24 @@
 namespace Component { namespace Camera {
     class FPSCamera: public Camera {
         public:
-            constexpr static float DEFAULT_YAW         = -90.0f;
-            constexpr static float DEFUALT_PITCH       = 0.0f;
-            constexpr static float DEFUALT_SPEED       = 2.5f;
-            constexpr static float DEFUALT_SENSITIVITY = 0.1f;
-            constexpr static float DEFUALT_ZOOM        = 45.0f;
+            constexpr static double DEFAULT_YAW         = -90.0f;
+            constexpr static double DEFUALT_PITCH       = 0.0f;
+            constexpr static double DEFUALT_SPEED       = 2.5f;
+            constexpr static double DEFUALT_SENSITIVITY = 0.1f;
+            constexpr static double DEFUALT_ZOOM        = 45.0f;
 
-            FPSCamera(glm::vec3 position, glm::vec3 up, float yaw, float pitch);
-            ~FPSCamera();
+            FPSCamera(glm::vec3, glm::vec3, double yaw, double pitch);
+            ~FPSCamera() override ;
 
             glm::mat4 getViewMatrix();
 
-            virtual void onEvent(Event::Event*) = 0;
+            void onEvent(Event::Event*) override;
         private:
-            float yaw;
-            float pitch;
-            float movementSpeed;
-            float mouseSensitivity;
-            float zoom;
+            double yaw;
+            double pitch;
+            double movementSpeed;
+            double mouseSensitivity;
+            double zoom;
 
             glm::vec3 frontVector;
             glm::vec3 upVector;

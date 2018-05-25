@@ -5,8 +5,8 @@
 #include <set>
 
 namespace Event {
-    EventListener::EventListener(){};
-    EventListener::~EventListener(){};
+    EventListener::EventListener() = default;
+    EventListener::~EventListener() = default;
     
     void EventListener::addListenEvent(std::string eventName) {
         listenEvents.insert(eventName);
@@ -18,7 +18,7 @@ namespace Event {
 
     std::vector<std::string> EventListener::getListenEvents() {
         std::vector<std::string> returnList;
-        for (auto event: listenEvents) {
+        for (auto const & event: listenEvents) {
             returnList.push_back(event);
         }
         return returnList;

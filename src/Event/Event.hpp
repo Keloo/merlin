@@ -4,7 +4,7 @@ namespace Event {
     class Event {
         public:
             Event();
-            ~Event();
+            virtual ~Event();
             void stopPropagation();
             bool isPropagationStopped();
         private:

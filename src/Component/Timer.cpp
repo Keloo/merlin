@@ -1,8 +1,8 @@
 #include "Timer.hpp"
 
 namespace Component {
-    Timer::Timer(){};
-    Timer::~Timer(){};
+    Timer::Timer() = default;
+    Timer::~Timer() = default;
 
     void Timer::start() {
         startTime = std::chrono::system_clock::now();

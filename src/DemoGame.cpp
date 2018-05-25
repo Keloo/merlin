@@ -1,6 +1,7 @@
 #include "Component/Game.hpp"
 #include "Component/Exception.hpp"
 #include "Component/Logger.hpp"
+#include "Component/Timer.hpp"
 
 #include "Framework/Window.hpp"
 #include "Framework/Renderer.hpp"
@@ -18,7 +19,7 @@ using namespace Framework;
 
 class DemoGame: public Component::Game {
     public:
-        DemoGame(): window(nullptr), renderer(nullptr) {};
+        DemoGame(): window(nullptr), renderer(nullptr), timer(nullptr) {};
         ~DemoGame() = default;
 
         void run() override {
@@ -43,20 +44,22 @@ class DemoGame: public Component::Game {
                     1, 2, 3   // second Triangle
                 };
 
-                VertexArray *vertexArray = new VertexArray();
-                VertexBuffer *vertexBuffer = new VertexBuffer(vertices, sizeof(vertices));
+                auto *vertexArray = new VertexArray();
+                auto *vertexBuffer = new VertexBuffer(vertices, sizeof(vertices));
 
-                VertexBufferLayout *vertexBufferLayout = new VertexBufferLayout();
+                auto *vertexBufferLayout = new VertexBufferLayout();
                 (*vertexBufferLayout).pushFloat(3);
 
                 (*vertexArray).addBuffer(*vertexBuffer, *vertexBufferLayout);
 
-                IndexBuffer *indexBuffer = new IndexBuffer(indices, 6);
+                auto *indexBuffer = new IndexBuffer(indices, 6);
 
                 while (isRunning) {
                     if (glfwGetKey((*window).getGlWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
                         isRunning = false;
                     }
+
+                    std::cout << (*timer).elapsed().count();
 
                     (*renderer).clear();
                     (*renderer).draw(vertexArray, indexBuffer);
@@ -73,9 +76,11 @@ class DemoGame: public Component::Game {
         void init() {
             window = new Window("Title", 800, 600);
             renderer = new Renderer();
+            timer = new Component::Timer();
         }
     private:
         bool isRunning = true;
         Window *window;
         Renderer *renderer;
+        Component::Timer *timer;
 };

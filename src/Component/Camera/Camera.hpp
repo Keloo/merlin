@@ -8,7 +8,7 @@ namespace Component { namespace Camera {
     class Camera: public Event::EventListener {
         public:
             Camera();
-            ~Camera();
+            ~Camera() override ;
             glm::vec3 getPosition();
             void setPosition(glm::vec3);
 
