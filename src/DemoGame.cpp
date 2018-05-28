@@ -2,6 +2,8 @@
 #include "Component/Exception.hpp"
 #include "Component/Logger.hpp"
 #include "Component/Timer.hpp"
+#include "Component/Camera/Camera.hpp"
+#include "Component/Camera/FPSCamera.hpp"
 
 #include "Framework/Window.hpp"
 #include "Framework/Renderer.hpp"
@@ -9,8 +11,10 @@
 #include "Framework/IndexBuffer.hpp"
 #include "Framework/Shader.hpp"
 #include "Framework/VertexArray.hpp"
+#include "Framework/GLDebug.hpp"
 
 #include <iostream>
+#include <Framework/InputHandler.hpp>
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -26,18 +30,18 @@ class DemoGame: public Component::Game {
             try {
                 init();
 
-                Shader *vertexShader = new Shader("./../res/shader/main.vs", Shader::ShaderType::Vertex);
-                Shader *fragmentShader = new Shader("./../res/shader/main.fs", Shader::ShaderType::Fragment);
+                Shader *vertexShader = new Shader("./../res/shader/main.vert", Shader::ShaderType::Vertex);
+                Shader *fragmentShader = new Shader("./../res/shader/main.frag", Shader::ShaderType::Fragment);
 
                 (*renderer).attachShader(vertexShader);
                 (*renderer).attachShader(fragmentShader);
                 (*renderer).link();
 
                 float vertices[] = {
-                    0.5f,  0.5f, 0.0f,  // top right
-                    0.5f, -0.5f, 0.0f,  // bottom right
+                    0.5f,  0.5f, 0.5f,  // top right
+                    0.5f, -0.5f, -0.2f,  // bottom right
                     -0.5f, -0.5f, 0.0f,  // bottom left
-                    -0.5f,  0.5f, 0.0f   // top left 
+                    -0.5f,  0.5f, -0.0f   // top left
                 };
                 unsigned int indices[] = {  // note that we start from 0!
                     0, 1, 3,  // first Triangle
@@ -54,15 +58,20 @@ class DemoGame: public Component::Game {
 
                 auto *indexBuffer = new IndexBuffer(indices, 6);
 
+                (*timer).start();
+
                 while (isRunning) {
+                    // @todo move to input handler
                     if (glfwGetKey((*window).getGlWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
                         isRunning = false;
                     }
 
-                    std::cout << (*timer).elapsed().count();
+                    (*inputHandler).handleInput();
 
                     (*renderer).clear();
-                    (*renderer).draw(vertexArray, indexBuffer);
+                    (*renderer).draw(camera, vertexArray, indexBuffer);
+
+                    (*timer).reset();
 
                     glfwSwapBuffers((*window).getGlWindow());
                     glfwPollEvents();
@@ -77,10 +86,15 @@ class DemoGame: public Component::Game {
             window = new Window("Title", 800, 600);
             renderer = new Renderer();
             timer = new Component::Timer();
+            camera =  new Component::Camera::FPSCamera();
+            inputHandler = new Framework::InputHandler(window, camera, timer);
+            GLCall(glEnable(GL_DEPTH_TEST));
         }
     private:
         bool isRunning = true;
         Window *window;
         Renderer *renderer;
         Component::Timer *timer;
+        Component::Camera::FPSCamera *camera;
+        Framework::InputHandler *inputHandler;
 };

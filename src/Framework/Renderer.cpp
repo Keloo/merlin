@@ -7,6 +7,9 @@
 #include "Framework/IndexBuffer.hpp"
 
 #include <iostream>
+#include <glm/detail/type_mat.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <Component/Camera/FPSCamera.hpp>
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -38,7 +41,7 @@ namespace Framework {
     }
 
     void Renderer::clear() const {
-        GLCall(glClear(GL_COLOR_BUFFER_BIT));
+        GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
     }
 
     Renderer::DrawMode Renderer::getDrawMode() {
@@ -54,16 +57,43 @@ namespace Framework {
             case Renderer::DrawMode::Triangle:  return GL_TRIANGLES;
             case Renderer::DrawMode::Line:      return GL_LINES;
         }
-        throw new Component::Exception("Invalid GL draw mode");
-        return -1;
     }
 
-    void Renderer::draw(VertexArray *vertexArray, IndexBuffer *indexBuffer) {
+    //@todo remove camera from here
+    void Renderer::draw(Component::Camera::FPSCamera* camera, VertexArray *vertexArray, IndexBuffer *indexBuffer) {
         GLCall(glUseProgram(glProgramId));
 
         (*vertexArray).bind();
         (*indexBuffer).bind();
 
-        GLCall(glDrawElements(getGlDrawMode(), (*indexBuffer).getCount(), GL_UNSIGNED_INT, 0));
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)600/(float)800, 0.1f, 100.0f);
+
+        glm::mat4 model;
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+
+        glm::mat4 view = (*camera).getViewMatrix();
+
+        GLCall(glUniformMatrix4fv(
+                glGetUniformLocation(getGlProgramId(), "projection"),
+                1,
+                GL_FALSE,
+                &projection[0][0]
+        ));
+
+        GLCall(glUniformMatrix4fv(
+                glGetUniformLocation(glProgramId, "model"),
+                1,
+                GL_FALSE,
+                &model[0][0]
+        ));
+
+        GLCall(glUniformMatrix4fv(
+                glGetUniformLocation(glProgramId, "view"),
+                1,
+                GL_FALSE,
+                &view[0][0]
+        ))
+
+        GLCall(glDrawElements(getGlDrawMode(), (*indexBuffer).getCount(), GL_UNSIGNED_INT, nullptr));
     }
 }

@@ -9,4 +9,7 @@ namespace Component { namespace Camera {
 
     glm::vec3 Camera::getFocalPoint() { return focalPoint; }
     void Camera::setFocalPoint(glm::vec3 f) { focalPoint = f; }
+
+    void Camera::setMovementSpeed(double speed) { movementSpeed = speed; }
+    double Camera::getMovementSpeed() { return movementSpeed; }
 }}

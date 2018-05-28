@@ -11,19 +11,16 @@
 #include <iostream>
 
 namespace Component { namespace Camera {
-    FPSCamera::FPSCamera(
-        glm::vec3 _position = glm::vec3(0.0f, 0.0f, 0.0f),
-        glm::vec3 _upVector = glm::vec3(0.0f, 1.0f, 0.0f),
-        double _yaw = FPSCamera::DEFAULT_YAW,
-        double _pitch = FPSCamera::DEFUALT_PITCH
-    ) {
+    FPSCamera::FPSCamera(glm::vec3 _position, glm::vec3 _upVector, double _yaw, double _pitch) {
         position = _position;
-        upVector = _upVector;
+        worldUpVector = _upVector;
+        frontVector = glm::vec3(0.0f, 0.0f, -1.0f);
         yaw = _yaw;
         pitch = _pitch;
+        movementSpeed = DEFAULT_SPEED;
+        mouseSensitivity = DEFAULT_SENSITIVITY;
+        zoom = DEFAULT_ZOOM;
         updateCameraVectors();
-
-        addListenEvent(Event::Keyboard::PressEvent::NAME);
     };
 
     FPSCamera::~FPSCamera() = default;
@@ -42,7 +39,19 @@ namespace Component { namespace Camera {
         upVector    = glm::normalize(glm::cross(rightVector, frontVector));
     }
 
-    void FPSCamera::onEvent(Event::Event *event) {
-        std::cout << "in event fps camera";
+    glm::vec3 FPSCamera::getFrontVector() {
+        return frontVector;
+    }
+
+    glm::vec3 FPSCamera::getRightVector() {
+        return rightVector;
+    }
+    void FPSCamera::setRightVector(const glm::vec3 & rightVector) {
+        FPSCamera::rightVector = rightVector;
+    }
+
+
+    void FPSCamera::setFrontVector(const glm::vec3 &frontVector) {
+        FPSCamera::frontVector = frontVector;
     }
 }}

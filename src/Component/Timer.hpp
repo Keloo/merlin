@@ -9,6 +9,7 @@ namespace Component {
             Timer();
             ~Timer();
             void start();
+            void reset();
             std::chrono::duration<double> elapsed();
             void stop();
         private:

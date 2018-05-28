@@ -9,31 +9,34 @@
 
 namespace Component { namespace Camera {
     class FPSCamera: public Camera {
-        public:
-            constexpr static double DEFAULT_YAW         = -90.0f;
-            constexpr static double DEFUALT_PITCH       = 0.0f;
-            constexpr static double DEFUALT_SPEED       = 2.5f;
-            constexpr static double DEFUALT_SENSITIVITY = 0.1f;
-            constexpr static double DEFUALT_ZOOM        = 45.0f;
+    public:
+        explicit FPSCamera(
+            glm::vec3 _position = glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3 _upVector = glm::vec3(0.0f, 1.0f, 0.0f),
+            double _yaw = DEFAULT_YAW,
+            double _pitch = DEFAULT_PITCH
+        );
 
-            FPSCamera(glm::vec3, glm::vec3, double yaw, double pitch);
-            ~FPSCamera() override ;
+        ~FPSCamera() override;
 
-            glm::mat4 getViewMatrix();
+        glm::vec3 getFrontVector();
+        void setFrontVector(const glm::vec3 &frontVector);
 
-            void onEvent(Event::Event*) override;
-        private:
-            double yaw;
-            double pitch;
-            double movementSpeed;
-            double mouseSensitivity;
-            double zoom;
+        glm::vec3 getRightVector();
+        void setRightVector(const glm::vec3 &rightVector);
 
-            glm::vec3 frontVector;
-            glm::vec3 upVector;
-            glm::vec3 rightVector;
-            glm::vec3 worldUpVector;
+        glm::mat4 getViewMatrix();
 
-            void updateCameraVectors();
+        void updateCameraVectors();
+    private:
+        double yaw;
+        double pitch;
+        double mouseSensitivity;
+        double zoom;
+
+        glm::vec3 frontVector;
+        glm::vec3 upVector;
+        glm::vec3 rightVector;
+        glm::vec3 worldUpVector;
     };
 }}

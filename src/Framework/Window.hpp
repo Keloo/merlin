@@ -16,7 +16,7 @@ namespace Framework {
             Window(std::string, int, int h);
             ~Window();
             void init();
-            void resizeCallback(GLFWwindow*, int, int);
+            static void resizeCallback(GLFWwindow*, int, int);
             GLFWwindow* getGlWindow();
     };
 }

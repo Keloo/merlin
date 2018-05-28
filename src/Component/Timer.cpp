@@ -8,6 +8,10 @@ namespace Component {
         startTime = std::chrono::system_clock::now();
     }
 
+    void Timer::reset() {
+        start();
+    }
+
     void Timer::stop() {
         // @TODO don't know why I need this :D
     }

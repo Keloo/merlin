@@ -18,7 +18,7 @@ namespace Framework {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         
         glWindow = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
-        glfwMakeContextCurrent(glWindow);        
+        glfwMakeContextCurrent(glWindow);
     }
 
     GLFWwindow* Window::getGlWindow() {

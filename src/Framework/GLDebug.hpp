@@ -29,8 +29,6 @@ namespace Framework {
                 "[OpenGL Error] (" + GLErrorCodeToString(errorCode) + "): " + 
                 std::string(function) + " " + std::string(file) + ":" + std::to_string(line)
             );
-
-            return false;
         }
 
         return true;
