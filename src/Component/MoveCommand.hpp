@@ -10,7 +10,6 @@ namespace Component {
         explicit MoveCommand(Camera::FPSCamera *camera, Timer *timer, Camera::Direction);
         ~MoveCommand() override;
         void execute() override;
-        void execute(double, double) override;
     private:
         Camera::Direction direction;
         Camera::FPSCamera *camera;

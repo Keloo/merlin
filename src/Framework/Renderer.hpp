@@ -4,6 +4,7 @@
 #include "Framework/Shader.hpp"
 #include "Framework/IndexBuffer.hpp"
 #include "Framework/VertexArray.hpp"
+#include "Window.hpp"
 
 namespace Framework {
     class Renderer {
@@ -12,7 +13,7 @@ namespace Framework {
             Renderer();
             ~Renderer();
             void init();
-            void draw(Component::Camera::FPSCamera*, VertexArray*, IndexBuffer*);
+            void draw(Framework::Window *window, Component::Camera::FPSCamera*, VertexArray*, IndexBuffer*);
             void link() const;
             void attachShader(Shader*) const;
             unsigned int getGlProgramId();

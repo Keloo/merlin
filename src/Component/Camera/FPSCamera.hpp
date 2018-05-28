@@ -27,6 +27,17 @@ namespace Component { namespace Camera {
 
         glm::mat4 getViewMatrix();
 
+        double getMouseSensitivity() const;
+        void setMouseSensitivity(double mouseSensitivity);
+
+        double getYaw() const;
+
+        void setYaw(double yaw);
+
+        double getPitch() const;
+
+        void setPitch(double pitch);
+
         void updateCameraVectors();
     private:
         double yaw;

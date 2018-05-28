@@ -8,12 +8,13 @@
 #include "Framework/Window.hpp"
 
 namespace Framework {
-    class InputHandler {
+    class InputHandler: public Event::EventListener {
     public:
         InputHandler(Framework::Window *window, Component::Camera::FPSCamera*, Component::Timer*);
         ~InputHandler();
-
+        void onEvent(Event::Event *event) override;
         void handleInput();
+        std::vector<std::string> getListenEvents() override;
     private:
         Framework::Window *window;
 

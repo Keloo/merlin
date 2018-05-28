@@ -17,6 +17,7 @@ namespace Framework {
             ~Window();
             void init();
             static void resizeCallback(GLFWwindow*, int, int);
+            static void cursorPositionCallback(GLFWwindow* window, double offsetX, double offsetY);
             GLFWwindow* getGlWindow();
     };
 }

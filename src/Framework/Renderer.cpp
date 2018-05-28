@@ -13,6 +13,7 @@
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
+#include "Window.hpp"
 
 namespace Framework {
     Renderer::Renderer(): drawMode(Renderer::DrawMode::Triangle) {
@@ -60,13 +61,13 @@ namespace Framework {
     }
 
     //@todo remove camera from here
-    void Renderer::draw(Component::Camera::FPSCamera* camera, VertexArray *vertexArray, IndexBuffer *indexBuffer) {
+    void Renderer::draw(Framework::Window *window, Component::Camera::FPSCamera* camera, VertexArray *vertexArray, IndexBuffer *indexBuffer) {
         GLCall(glUseProgram(glProgramId));
 
         (*vertexArray).bind();
         (*indexBuffer).bind();
 
-        glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)600/(float)800, 0.1f, 100.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)800/(float)600, 0.1f, 100.0f);
 
         glm::mat4 model;
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));

@@ -16,8 +16,6 @@ namespace Component {
 
     MoveCommand::~MoveCommand() = default;
 
-    void MoveCommand::execute(double, double) {};
-
     void MoveCommand::execute() {
         double deltaTime = (*timer).elapsed().count();
         double cameraSpeed = (*camera).getMovementSpeed()*deltaTime;

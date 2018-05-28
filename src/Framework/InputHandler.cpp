@@ -5,6 +5,8 @@
 #include "Framework/GLDebug.hpp"
 #include "Framework/InputHandler.hpp"
 #include "Framework/Window.hpp"
+#include "Event/Mouse/CursorPosition.hpp"
+#include "Component/CursorMoveCommand.hpp"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -18,6 +20,8 @@ namespace Framework {
         buttonS = new Component::MoveCommand(camera, timer, Component::Camera::Direction::BACKWARD);
         buttonA = new Component::MoveCommand(camera, timer, Component::Camera::Direction::LEFT);
         buttonD = new Component::MoveCommand(camera, timer, Component::Camera::Direction::RIGHT);
+        cursor = new Component::CursorMoveCommand(camera, timer);
+        InputHandler::window = window;
     };
 
     InputHandler::~InputHandler() = default;
@@ -38,5 +42,20 @@ namespace Framework {
         if (glfwGetKey((*window).getGlWindow(), GLFW_KEY_D) == GLFW_PRESS) {
             buttonD->execute();
         }
+    }
+
+    void InputHandler::onEvent(Event::Event * _event) {
+        auto event = dynamic_cast<Event::Mouse::CursorPosition*>(_event);
+        auto cursorCommand = dynamic_cast<Component::CursorMoveCommand*>(cursor);
+        (*cursorCommand).setOffsetX((*event).getOffsetX());
+        (*cursorCommand).setOffsetY((*event).getOffsetY());
+
+        cursorCommand->execute();
+    }
+
+    std::vector<std::string> InputHandler::getListenEvents() {
+        return {
+            Event::Mouse::CursorPosition::NAME,
+        };
     }
 }

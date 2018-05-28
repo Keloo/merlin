@@ -50,8 +50,31 @@ namespace Component { namespace Camera {
         FPSCamera::rightVector = rightVector;
     }
 
-
     void FPSCamera::setFrontVector(const glm::vec3 &frontVector) {
         FPSCamera::frontVector = frontVector;
+    }
+
+    double FPSCamera::getMouseSensitivity() const {
+        return mouseSensitivity;
+    }
+
+    void FPSCamera::setMouseSensitivity(double mouseSensitivity) {
+        FPSCamera::mouseSensitivity = mouseSensitivity;
+    }
+
+    double FPSCamera::getYaw() const {
+        return yaw;
+    }
+
+    void FPSCamera::setYaw(double yaw) {
+        FPSCamera::yaw = yaw;
+    }
+
+    double FPSCamera::getPitch() const {
+        return pitch;
+    }
+
+    void FPSCamera::setPitch(double pitch) {
+        FPSCamera::pitch = pitch;
     }
 }}

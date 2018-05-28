@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <Framework/InputHandler.hpp>
+#include <Event/EventDispatcher.hpp>
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -29,6 +30,7 @@ class DemoGame: public Component::Game {
         void run() override {
             try {
                 init();
+                registerEventListeners();
 
                 Shader *vertexShader = new Shader("./../res/shader/main.vert", Shader::ShaderType::Vertex);
                 Shader *fragmentShader = new Shader("./../res/shader/main.frag", Shader::ShaderType::Fragment);
@@ -38,14 +40,14 @@ class DemoGame: public Component::Game {
                 (*renderer).link();
 
                 float vertices[] = {
-                    0.5f,  0.5f, 0.5f,  // top right
+                    0.5f,  0.5f, -0.9f,  // top right
                     0.5f, -0.5f, -0.2f,  // bottom right
                     -0.5f, -0.5f, 0.0f,  // bottom left
-                    -0.5f,  0.5f, -0.0f   // top left
+//                    -0.5f,  0.5f, 0.0f   // top left
                 };
                 unsigned int indices[] = {  // note that we start from 0!
-                    0, 1, 3,  // first Triangle
-                    1, 2, 3   // second Triangle
+                    0, 1, 2,  // first Triangle
+//                    1, 2, 3   // second Triangle
                 };
 
                 auto *vertexArray = new VertexArray();
@@ -69,7 +71,7 @@ class DemoGame: public Component::Game {
                     (*inputHandler).handleInput();
 
                     (*renderer).clear();
-                    (*renderer).draw(camera, vertexArray, indexBuffer);
+                    (*renderer).draw(window, camera, vertexArray, indexBuffer);
 
                     (*timer).reset();
 
@@ -90,6 +92,11 @@ class DemoGame: public Component::Game {
             inputHandler = new Framework::InputHandler(window, camera, timer);
             GLCall(glEnable(GL_DEPTH_TEST));
         }
+
+        void registerEventListeners() {
+            Event::EventDispatcher::getInstance().addListener((*inputHandler).getListenEvents(), inputHandler);
+        }
+        
     private:
         bool isRunning = true;
         Window *window;

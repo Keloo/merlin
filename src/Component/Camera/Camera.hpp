@@ -16,7 +16,7 @@ namespace Component { namespace Camera {
     constexpr static double DEFAULT_YAW         = -90.0f;
     constexpr static double DEFAULT_PITCH       = 0.0f;
     constexpr static double DEFAULT_SPEED       = 2.5f;
-    constexpr static double DEFAULT_SENSITIVITY = 0.1f;
+    constexpr static double DEFAULT_SENSITIVITY = 0.01f;
     constexpr static double DEFAULT_ZOOM        = 45.0f;
 
     class Camera {

@@ -13,7 +13,8 @@ namespace Event {
             virtual ~EventListener();
             void addListenEvent(std::string eventName);
             void removeListenEvent(std::string eventName);
-            std::vector<std::string> getListenEvents();
+
+        virtual std::vector<std::string> getListenEvents();
             virtual void onEvent(Event *event) = 0;
         private:
             std::set<std::string> listenEvents;
