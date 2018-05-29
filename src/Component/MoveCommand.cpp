@@ -23,10 +23,10 @@ namespace Component {
 
         switch (direction) {
             case Camera::Direction::FORWARD:
-                cameraPosition -= (float)cameraSpeed * (*camera).getFrontVector();
+                cameraPosition += (float)cameraSpeed * (*camera).getFrontVector();
                 break;
             case Camera::Direction::BACKWARD:
-                cameraPosition += (float)cameraSpeed * (*camera).getFrontVector();
+                cameraPosition -= (float)cameraSpeed * (*camera).getFrontVector();
                 break;
             case Camera::Direction::LEFT:
                 cameraPosition -= (float)cameraSpeed * (*camera).getRightVector();

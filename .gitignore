@@ -3,3 +3,10 @@
 /var/logs/log.txt
 /.idea
 /cmake-build-debug
+cmake_install.cmake
+CMakeCache.txt
+libglad.a
+Makefile
+Merlin
+Merlin.cbp
+/CMakeFiles

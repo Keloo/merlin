@@ -9,7 +9,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 # Include dirs
 include_directories("${PROJECT_SOURCE_DIR}/lib" "${PROJECT_SOURCE_DIR}/src")
 
-add_library(glad lib/glad/glad.h lib/glad/glad.c)
+add_library(glad lib/glad/glad.h lib/glad/glad.c lib/stb_image/stb_image.h lib/stb_image/stb_image.c)
 
 file(GLOB SOURCES 
     "src/*.cpp" 

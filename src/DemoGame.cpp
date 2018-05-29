@@ -16,6 +16,7 @@
 #include <iostream>
 #include <Framework/InputHandler.hpp>
 #include <Event/EventDispatcher.hpp>
+#include <Framework/Texture.hpp>
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -32,22 +33,72 @@ class DemoGame: public Component::Game {
                 init();
                 registerEventListeners();
 
-                Shader *vertexShader = new Shader("./../res/shader/main.vert", Shader::ShaderType::Vertex);
-                Shader *fragmentShader = new Shader("./../res/shader/main.frag", Shader::ShaderType::Fragment);
+                Shader *vertexShader = new Shader("./res/shader/main.vert", Shader::ShaderType::Vertex);
+                Shader *fragmentShader = new Shader("./res/shader/main.frag", Shader::ShaderType::Fragment);
 
                 (*renderer).attachShader(vertexShader);
                 (*renderer).attachShader(fragmentShader);
                 (*renderer).link();
 
                 float vertices[] = {
-                    0.5f,  0.5f, -0.9f,  // top right
-                    0.5f, -0.5f, -0.2f,  // bottom right
-                    -0.5f, -0.5f, 0.0f,  // bottom left
-//                    -0.5f,  0.5f, 0.0f   // top left
+                        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+                        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+                        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+                        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+                        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+                        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+                        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+                        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+                        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+                        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+                        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+                        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+                        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+                        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+                        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+                        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+                        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+                        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+                        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+                        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+                        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+                        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+                        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+                        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+                        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+                        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+                        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+                        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+                        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+                        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+                        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+                        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+                        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+                        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+                        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+                        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
                 };
-                unsigned int indices[] = {  // note that we start from 0!
-                    0, 1, 2,  // first Triangle
-//                    1, 2, 3   // second Triangle
+                // world space positions of our cubes
+                glm::vec3 cubePositions[] = {
+                        glm::vec3( 0.0f,  0.0f,  0.0f),
+                        glm::vec3( 2.0f,  5.0f, -15.0f),
+                        glm::vec3(-1.5f, -2.2f, -2.5f),
+                        glm::vec3(-3.8f, -2.0f, -12.3f),
+                        glm::vec3( 2.4f, -0.4f, -3.5f),
+                        glm::vec3(-1.7f,  3.0f, -7.5f),
+                        glm::vec3( 1.3f, -2.0f, -2.5f),
+                        glm::vec3( 1.5f,  2.0f, -2.5f),
+                        glm::vec3( 1.5f,  0.2f, -1.5f),
+                        glm::vec3(-1.3f,  1.0f, -1.5f)
+                };
+
+                unsigned int indices[] = {
+                    0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
                 };
 
                 auto *vertexArray = new VertexArray();
@@ -55,13 +106,13 @@ class DemoGame: public Component::Game {
 
                 auto *vertexBufferLayout = new VertexBufferLayout();
                 (*vertexBufferLayout).pushFloat(3);
-
+                (*vertexBufferLayout).pushFloat(2);
                 (*vertexArray).addBuffer(*vertexBuffer, *vertexBufferLayout);
+                auto *indexBuffer = new IndexBuffer(indices, 36);
 
-                auto *indexBuffer = new IndexBuffer(indices, 6);
+                Texture *texture = new Texture("./res/texture/container.jpg");
 
                 (*timer).start();
-
                 while (isRunning) {
                     // @todo move to input handler
                     if (glfwGetKey((*window).getGlWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
@@ -70,6 +121,7 @@ class DemoGame: public Component::Game {
 
                     (*inputHandler).handleInput();
 
+                    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
                     (*renderer).clear();
                     (*renderer).draw(window, camera, vertexArray, indexBuffer);
 
