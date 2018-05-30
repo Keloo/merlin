@@ -11,10 +11,6 @@ namespace Component {
     CursorMoveCommand::~CursorMoveCommand() = default;
 
     void CursorMoveCommand::execute() {
-
-        std::cout << "in execute" << std::endl;
-        std::cout << offsetX << ' ' << offsetY << std::endl;
-
         if (!isIsSetLastOffset()) {
             setIsSetLastOffset(true);
             lastOffsetX = offsetX;
