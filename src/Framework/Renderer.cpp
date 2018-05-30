@@ -61,7 +61,13 @@ namespace Framework {
     }
 
     //@todo remove camera from here
-    void Renderer::draw(Framework::Window *window, Component::Camera::FPSCamera* camera, VertexArray *vertexArray, IndexBuffer *indexBuffer) {
+    void Renderer::draw(
+        Framework::Window *window,
+        Component::Camera::FPSCamera* camera,
+        VertexArray *vertexArray,
+        IndexBuffer *indexBuffer,
+        Component::Cube *cube
+    ) {
         GLCall(glUseProgram(glProgramId));
 
         (*vertexArray).bind();
@@ -70,7 +76,7 @@ namespace Framework {
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)800/(float)600, 0.1f, 100.0f);
 
         glm::mat4 model;
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::translate(model, cube->getPosition());
 
         glm::mat4 view = (*camera).getViewMatrix();
 

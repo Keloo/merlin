@@ -5,6 +5,7 @@ project(Merlin)
 set(CMAKE_CXX_STANDARD 14)
 # Make it verbose
 set(CMAKE_VERBOSE_MAKEFILE ON)
+SET(CMAKE_BUILD_TYPE Debug)
 
 # Include dirs
 include_directories("${PROJECT_SOURCE_DIR}/lib" "${PROJECT_SOURCE_DIR}/src")

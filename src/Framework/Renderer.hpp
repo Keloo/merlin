@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Component/Camera/FPSCamera.hpp>
+#include <Component/Cube.hpp>
 #include "Framework/Shader.hpp"
 #include "Framework/IndexBuffer.hpp"
 #include "Framework/VertexArray.hpp"
@@ -13,7 +14,7 @@ namespace Framework {
             Renderer();
             ~Renderer();
             void init();
-            void draw(Framework::Window *window, Component::Camera::FPSCamera*, VertexArray*, IndexBuffer*);
+            void draw(Framework::Window *window, Component::Camera::FPSCamera*, VertexArray*, IndexBuffer*, Component::Cube*);
             void link() const;
             void attachShader(Shader*) const;
             unsigned int getGlProgramId();
